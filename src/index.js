@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { HashRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { ThemeProvider } from 'styled-components';
 
+import App from './App';
+// 样式重置
+import 'normalize.css'
+import "./assets/css/index.less"
+import store from './store';
+import theme from './assets/theme';
+
+
+// @ => src:webpack
+// 问题：react脚手架隐藏webpack
+// 解决：1.npm run eject
+// 2.craco => create-react-app config
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
+    {/* <Suspense fallback="loading"> */}
+    <ThemeProvider theme={theme}>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </ThemeProvider>
+    {/* </Suspense> */}
+  </Provider>
+  // </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
